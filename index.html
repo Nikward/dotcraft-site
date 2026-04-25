@@ -629,14 +629,39 @@ section{padding:90px 0;position:relative}
 /* === АНИМАЦИЯ ВНИМАНИЯ ДЛЯ КОНТАКТОВ === */
 /* Срабатывает, когда в URL появляется #contact */
 @keyframes highlight-contact {
-  0% { border-color: var(--line); box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 24px 50px -16px rgba(26,35,50,0.12); transform: translateY(0); }
-  20% { border-color: var(--accent); box-shadow: 0 0 0 8px var(--accent-soft), 0 24px 50px -16px rgba(79,124,255,0.4); transform: translateY(-6px); }
-  50% { border-color: var(--accent); box-shadow: 0 0 0 16px var(--accent-soft), 0 24px 50px -16px rgba(79,124,255,0.4); transform: translateY(-6px); }
-  80% { border-color: var(--accent); box-shadow: 0 0 0 8px var(--accent-soft), 0 24px 50px -16px rgba(79,124,255,0.4); transform: translateY(-6px); }
-  100% { border-color: var(--line); box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 24px 50px -16px rgba(26,35,50,0.12); transform: translateY(0); }
+  0% { 
+    border-color: var(--line); 
+    background: var(--surface);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 24px 50px -16px rgba(26,35,50,0.12); 
+    transform: translateY(0) scale(1); 
+  }
+  20% { 
+    border-color: var(--accent); 
+    background: #f0f4ff; /* Легкий синий оттенок фона карточки */
+    box-shadow: 0 0 0 4px rgba(79, 124, 255, 0.3), 0 24px 50px -16px rgba(79, 124, 255, 0.4); 
+    transform: translateY(-5px) scale(1.02); /* Карточка слегка "выпрыгивает" вперед */
+  }
+  50% { 
+    border-color: var(--accent); 
+    background: #f0f4ff;
+    box-shadow: 0 0 0 8px rgba(79, 124, 255, 0.15), 0 24px 50px -16px rgba(79, 124, 255, 0.4); 
+    transform: translateY(-5px) scale(1.02); 
+  }
+  80% { 
+    border-color: var(--accent); 
+    background: #f0f4ff;
+    box-shadow: 0 0 0 4px rgba(79, 124, 255, 0.3), 0 24px 50px -16px rgba(79, 124, 255, 0.4); 
+    transform: translateY(-5px) scale(1.02); 
+  }
+  100% { 
+    border-color: var(--line); 
+    background: var(--surface);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 24px 50px -16px rgba(26,35,50,0.12); 
+    transform: translateY(0) scale(1); 
+  }
 }
 #contact:target .contact-card {
-  animation: highlight-contact 2s ease-in-out 0.3s; /* Увеличена длительность и плавность */
+  animation: highlight-contact 2s ease-in-out 0.3s;
 }
 
 /* === FOOTER === */
