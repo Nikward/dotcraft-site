@@ -520,6 +520,86 @@ section{padding:90px 0;position:relative}
 }
 .pill:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
 
+/* === PRICING === */
+.pricing-wrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+.pricing-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 36px 28px;
+  position: relative;
+  transition: transform .2s, box-shadow .2s;
+  display: flex;
+  flex-direction: column;
+}
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px -10px rgba(26,35,50,0.1);
+}
+.pricing-badge {
+  position: absolute;
+  top: -12px;
+  left: 28px;
+  background: var(--accent);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 10px rgba(79, 124, 255, 0.3);
+}
+.pricing-card.popular {
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px rgba(79, 124, 255, 0.1);
+}
+.pricing-type {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+}
+.pricing-price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+.pricing-desc {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+.pricing-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--ink);
+  background: var(--bg);
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  align-self: flex-start;
+}
+.pricing-time::before {
+  content: "";
+  display: block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--mint);
+}
+
 /* === CONTACT === */
 .contact-section{
   padding:90px 0;
@@ -678,18 +758,6 @@ footer{
   color:var(--ink);
   font-weight:500;
 }
-.footer-contact {
-  display: flex;
-  gap: 20px;
-}
-.footer-contact a {
-  color: var(--ink-soft);
-  text-decoration: none;
-  transition: color 0.15s;
-}
-.footer-contact a:hover {
-  color: var(--accent);
-}
 
 .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s}
 .reveal.in{opacity:1;transform:translateY(0)}
@@ -701,6 +769,7 @@ footer{
   .process-wrap{grid-template-columns:1fr;gap:40px}
   .terminal{position:static}
   .stack-wrap{grid-template-columns:1fr}
+  .pricing-wrap{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr;gap:32px}
   .nav-phone { display: none; } /* Скрываем телефон в шапке на планшетах/мобильных */
 }
@@ -729,6 +798,7 @@ footer{
       <li><a href="#services">Услуги</a></li>
       <li><a href="#process">Процесс</a></li>
       <li><a href="#stack">Технологии</a></li>
+      <li><a href="#pricing">Стоимость</a></li>
       <li>
         <a href="tel:+79991234567" class="nav-phone">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
@@ -958,6 +1028,38 @@ footer{
           <span class="pill">GitLab CI</span>
           <span class="pill">Nginx</span>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="section-cool">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Стоимость</div>
+      <h2 class="section-title">Прозрачные цены</h2>
+      <p class="section-lede">Точная смета зависит от задачи, но чтобы вы понимали порядок, мы подготовили ориентиры для частых форматов работы.</p>
+    </div>
+    <div class="pricing-wrap">
+      <div class="pricing-card reveal">
+        <div class="pricing-type">Интеграции и API</div>
+        <div class="pricing-price">от 60 000 ₽</div>
+        <div class="pricing-desc">Микросервисы, боты, сложная интеграция сторонних API (банки, 1С и др.), оптимизация баз данных.</div>
+        <div class="pricing-time">Срок: от 1-2 недель</div>
+      </div>
+      <div class="pricing-card popular reveal">
+        <div class="pricing-badge">Популярно</div>
+        <div class="pricing-type">Веб-приложения (MVP)</div>
+        <div class="pricing-price">от 150 000 ₽</div>
+        <div class="pricing-desc">Комплексная разработка личного кабинета, портала или CRM «с нуля» до первой рабочей версии.</div>
+        <div class="pricing-time">Срок: от 3-4 недель</div>
+      </div>
+      <div class="pricing-card reveal">
+        <div class="pricing-type">Поддержка и развитие</div>
+        <div class="pricing-price">от 40 000 ₽ / мес</div>
+        <div class="pricing-desc">Берём ваш проект на техническое сопровождение: фиксим баги и планомерно добавляем новые фичи.</div>
+        <div class="pricing-time">Фиксированная оплата</div>
       </div>
     </div>
   </div>
