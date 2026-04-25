@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DevCraft — Веб-разработка на ASP.NET Core</title>
 <meta name="description" content="Команда разработчиков ASP.NET Core. CRM, веб-приложения, API под заказ.">
-<!-- OpenGraph теги для красивых превью в мессенджерах -->
 <meta property="og:title" content="DevCraft — Разработка на .NET">
 <meta property="og:description" content="Делаем CRM-системы, веб-приложения и API под заказ. Полный цикл.">
 <meta property="og:type" content="website">
@@ -40,7 +39,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html{
   scroll-behavior:smooth;
-  scroll-padding-top: 75px; /* Останавливаем скролл чуть раньше, чтобы шапка не перекрывала контент */
+  scroll-padding-top: 75px;
 }
 body{
   font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
@@ -93,7 +92,6 @@ nav.scrolled{border-bottom-color:var(--line)}
 }
 .nav-links a:hover{color:var(--ink)}
 
-/* Телефон в шапке (только для десктопов) */
 .nav-phone {
   display: flex;
   align-items: center;
@@ -422,7 +420,6 @@ section{padding:90px 0;position:relative}
   color:var(--ink-soft);
 }
 
-/* Terminal Animation Setup */
 .terminal{
   background:#1e2536;
   border-radius:14px;
@@ -445,7 +442,6 @@ section{padding:90px 0;position:relative}
   line-height:1.95;
 }
 .term-line{display:block; opacity: 0; transform: translateY(5px); transition: opacity 0.2s, transform 0.2s;}
-/* Classes added by JS to trigger animation */
 .term-line.visible { opacity: 1; transform: translateY(0); }
 
 .term-prompt{color:var(--accent)}
@@ -687,7 +683,7 @@ section{padding:90px 0;position:relative}
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
 }
-/* Цвета иконок контактов */
+
 .contact-item:nth-child(1) .contact-icon{background:var(--accent-soft);color:var(--accent)}
 .contact-item:nth-child(2) .contact-icon{background:var(--warm-soft);color:var(--warm)}
 .contact-item:nth-child(3) .contact-icon{background:var(--mint-soft);color:var(--mint)}
@@ -707,7 +703,6 @@ section{padding:90px 0;position:relative}
 .contact-item:hover .contact-arrow{transform:translate(3px,-3px);color:var(--accent)}
 
 /* === АНИМАЦИЯ ВНИМАНИЯ ДЛЯ КОНТАКТОВ === */
-/* Срабатывает, когда в URL появляется #contact */
 @keyframes highlight-contact {
   0% { 
     border-color: var(--line); 
@@ -717,9 +712,9 @@ section{padding:90px 0;position:relative}
   }
   20% { 
     border-color: var(--accent); 
-    background: #f0f4ff; /* Легкий синий оттенок фона карточки */
+    background: #f0f4ff;
     box-shadow: 0 0 0 4px rgba(79, 124, 255, 0.3), 0 24px 50px -16px rgba(79, 124, 255, 0.4); 
-    transform: translateY(-5px) scale(1.02); /* Карточка слегка "выпрыгивает" вперед */
+    transform: translateY(-5px) scale(1.02);
   }
   50% { 
     border-color: var(--accent); 
@@ -771,7 +766,7 @@ footer{
   .stack-wrap{grid-template-columns:1fr}
   .pricing-wrap{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr;gap:32px}
-  .nav-phone { display: none; } /* Скрываем телефон в шапке на планшетах/мобильных */
+  .nav-phone { display: none; }
 }
 @media(max-width:600px){
   .container{padding:0 18px}
@@ -988,8 +983,8 @@ footer{
           <span class="pill">ASP.NET Core</span>
           <span class="pill">C#</span>
           <span class="pill">EF Core</span>
-          <span class="pill">RabbitMQ</span> <!-- Добавлен брокер -->
-          <span class="pill">Kafka</span>    <!-- Добавлен брокер -->
+          <span class="pill">RabbitMQ</span>
+          <span class="pill">Kafka</span>
           <span class="pill">КриптоПро .NET</span>
           <span class="pill">SignalR</span>
           <span class="pill">Minimal API</span>
@@ -1039,27 +1034,27 @@ footer{
     <div class="section-head reveal">
       <div class="section-eyebrow">Стоимость</div>
       <h2 class="section-title">Прозрачные цены</h2>
-      <p class="section-lede">Точная смета зависит от задачи, но чтобы вы понимали порядок, мы подготовили ориентиры для частых форматов работы.</p>
+      <p class="section-lede">Точная смета зависит от задачи, но мы подготовили ориентиры для типовых запросов.</p>
     </div>
     <div class="pricing-wrap">
       <div class="pricing-card reveal">
-        <div class="pricing-type">Интеграции и API</div>
+        <div class="pricing-type">Бэкенд и Интеграции</div>
         <div class="pricing-price">от 60 000 ₽</div>
-        <div class="pricing-desc">Микросервисы, боты, сложная интеграция сторонних API (банки, 1С и др.), оптимизация баз данных.</div>
+        <div class="pricing-desc">Разработка API, Telegram-ботов, настройка баз данных и связывание вашего сайта с внутренними системами или платежными шлюзами.</div>
         <div class="pricing-time">Срок: от 1-2 недель</div>
       </div>
       <div class="pricing-card popular reveal">
         <div class="pricing-badge">Популярно</div>
-        <div class="pricing-type">Веб-приложения (MVP)</div>
+        <div class="pricing-type">Веб-приложения под ключ</div>
         <div class="pricing-price">от 150 000 ₽</div>
-        <div class="pricing-desc">Комплексная разработка личного кабинета, портала или CRM «с нуля» до первой рабочей версии.</div>
+        <div class="pricing-desc">Комплексная разработка CRM-системы, личного кабинета или корпоративного портала с вашей бизнес-логикой от нуля до релиза.</div>
         <div class="pricing-time">Срок: от 3-4 недель</div>
       </div>
       <div class="pricing-card reveal">
-        <div class="pricing-type">Поддержка и развитие</div>
-        <div class="pricing-price">от 40 000 ₽ / мес</div>
-        <div class="pricing-desc">Берём ваш проект на техническое сопровождение: фиксим баги и планомерно добавляем новые фичи.</div>
-        <div class="pricing-time">Фиксированная оплата</div>
+        <div class="pricing-type">Техническая поддержка</div>
+        <div class="pricing-price">от 20 000 ₽ / мес</div>
+        <div class="pricing-desc">Сопровождение готового проекта: мониторинг серверов, оперативное исправление багов и планомерное добавление новых функций.</div>
+        <div class="pricing-time">Ежемесячная оплата</div>
       </div>
     </div>
   </div>
@@ -1111,7 +1106,6 @@ footer{
             </div>
             <span class="contact-arrow">↗</span>
           </a>
-          <!-- ДОБАВЛЕН ТЕЛЕФОН ЗДЕСЬ -->
           <a href="tel:+79991234567" class="contact-item">
             <div class="contact-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
@@ -1141,13 +1135,11 @@ footer{
 </footer>
 
 <script>
-// Эффект блюра навигации при скролле
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 10);
 });
 
-// Анимация появления блоков
 const reveals = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -1159,14 +1151,13 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 reveals.forEach(el => io.observe(el));
 
-// Анимация терминала (строки появляются по очереди)
 const termObserver = new IntersectionObserver((entries) => {
   if (entries[0].isIntersecting) {
     const lines = document.querySelectorAll('.term-line');
     lines.forEach((line, index) => {
       setTimeout(() => {
         line.classList.add('visible');
-      }, index * 200); // задержка 200мс между строками
+      }, index * 200);
     });
     termObserver.disconnect();
   }
