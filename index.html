@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DevCraft — Веб-разработка на ASP.NET Core</title>
 <meta name="description" content="Команда разработчиков ASP.NET Core. CRM, веб-приложения, API под заказ.">
+<!-- OpenGraph теги для красивых превью в мессенджерах -->
+<meta property="og:title" content="DevCraft — Разработка на .NET">
+<meta property="og:description" content="Делаем CRM-системы, веб-приложения и API под заказ. Полный цикл.">
+<meta property="og:type" content="website">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -33,7 +38,10 @@
   --green:#22c55e;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top: 75px; /* Останавливаем скролл чуть раньше, чтобы шапка не перекрывала контент */
+}
 body{
   font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
   background:var(--bg);
@@ -75,7 +83,7 @@ nav.scrolled{border-bottom-color:var(--line)}
   font-size:.78rem;
   font-weight:600;
 }
-.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center;}
 .nav-links a{
   color:var(--ink-soft);
   text-decoration:none;
@@ -84,6 +92,20 @@ nav.scrolled{border-bottom-color:var(--line)}
   transition:color .15s;
 }
 .nav-links a:hover{color:var(--ink)}
+
+/* Телефон в шапке (только для десктопов) */
+.nav-phone {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-left: 20px;
+}
+.nav-phone svg { width: 16px; height: 16px; color: var(--accent); }
+
 .nav-cta{
   padding:8px 18px;
   background:var(--accent);
@@ -400,7 +422,7 @@ section{padding:90px 0;position:relative}
   color:var(--ink-soft);
 }
 
-/* Terminal */
+/* Terminal Animation Setup */
 .terminal{
   background:#1e2536;
   border-radius:14px;
@@ -422,7 +444,10 @@ section{padding:90px 0;position:relative}
   color:#a0a8c0;
   line-height:1.95;
 }
-.term-line{display:block}
+.term-line{display:block; opacity: 0; transform: translateY(5px); transition: opacity 0.2s, transform 0.2s;}
+/* Classes added by JS to trigger animation */
+.term-line.visible { opacity: 1; transform: translateY(0); }
+
 .term-prompt{color:var(--accent)}
 .term-out{color:#a0a8c0}
 .term-ok{color:#7ad991}
@@ -582,8 +607,10 @@ section{padding:90px 0;position:relative}
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
 }
+/* Цвета иконок контактов */
 .contact-item:nth-child(1) .contact-icon{background:var(--accent-soft);color:var(--accent)}
 .contact-item:nth-child(2) .contact-icon{background:var(--warm-soft);color:var(--warm)}
+.contact-item:nth-child(3) .contact-icon{background:var(--mint-soft);color:var(--mint)}
 .contact-icon svg{width:20px;height:20px}
 .contact-info{flex:1;display:flex;flex-direction:column;gap:2px}
 .contact-type{
@@ -599,6 +626,19 @@ section{padding:90px 0;position:relative}
 }
 .contact-item:hover .contact-arrow{transform:translate(3px,-3px);color:var(--accent)}
 
+/* === АНИМАЦИЯ ВНИМАНИЯ ДЛЯ КОНТАКТОВ === */
+/* Срабатывает, когда в URL появляется #contact */
+@keyframes highlight-contact {
+  0% { border-color: var(--line); box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 24px 50px -16px rgba(26,35,50,0.12); transform: translateY(0); }
+  20% { border-color: var(--accent); box-shadow: 0 0 0 8px var(--accent-soft), 0 24px 50px -16px rgba(79,124,255,0.4); transform: translateY(-6px); }
+  50% { border-color: var(--accent); box-shadow: 0 0 0 16px var(--accent-soft), 0 24px 50px -16px rgba(79,124,255,0.4); transform: translateY(-6px); }
+  80% { border-color: var(--accent); box-shadow: 0 0 0 8px var(--accent-soft), 0 24px 50px -16px rgba(79,124,255,0.4); transform: translateY(-6px); }
+  100% { border-color: var(--line); box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 24px 50px -16px rgba(26,35,50,0.12); transform: translateY(0); }
+}
+#contact:target .contact-card {
+  animation: highlight-contact 2s ease-in-out 0.3s; /* Увеличена длительность и плавность */
+}
+
 /* === FOOTER === */
 footer{
   background:var(--surface);
@@ -613,6 +653,18 @@ footer{
   color:var(--ink);
   font-weight:500;
 }
+.footer-contact {
+  display: flex;
+  gap: 20px;
+}
+.footer-contact a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-contact a:hover {
+  color: var(--accent);
+}
 
 .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s}
 .reveal.in{opacity:1;transform:translateY(0)}
@@ -625,6 +677,7 @@ footer{
   .terminal{position:static}
   .stack-wrap{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr;gap:32px}
+  .nav-phone { display: none; } /* Скрываем телефон в шапке на планшетах/мобильных */
 }
 @media(max-width:600px){
   .container{padding:0 18px}
@@ -635,6 +688,7 @@ footer{
   .step{grid-template-columns:1fr;gap:14px}
   .step-num{width:38px;height:38px}
   .section-head{margin-bottom:36px}
+  .footer-inner { flex-direction: column; align-items: flex-start; }
 }
 </style>
 </head>
@@ -650,6 +704,12 @@ footer{
       <li><a href="#services">Услуги</a></li>
       <li><a href="#process">Процесс</a></li>
       <li><a href="#stack">Технологии</a></li>
+      <li>
+        <a href="tel:+79991234567" class="nav-phone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          +7 (999) 123-45-67
+        </a>
+      </li>
     </ul>
     <a href="#contact" class="nav-cta">Связаться</a>
   </div>
@@ -712,7 +772,7 @@ footer{
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8h18M7 6h.01M10 6h.01"/></svg>
         </div>
         <h3 class="service-title">Веб-приложения</h3>
-        <p class="service-desc">Внутренние порталы, личные кабинеты, документооборот, дашборды.</p>
+        <p class="service-desc">Внутренние порталы, кабинеты, документооборот (вкл. проверку ЭЦП через КриптоПро), дашборды.</p>
       </div>
       <div class="service reveal">
         <div class="service-icon">
@@ -789,20 +849,20 @@ footer{
           </div>
         </div>
       </div>
-      <div class="terminal reveal">
+      <div class="terminal reveal" id="terminal-block">
         <div class="terminal-header">
           <div class="ide-dots"><span></span><span></span><span></span></div>
-          <div class="ide-tab">~ / divcraft / запуск</div>
+          <div class="ide-tab">~ / devcraft / запуск</div>
           <div class="ide-spacer"></div>
         </div>
-        <div class="terminal-body">
+        <div class="terminal-body" id="term-lines">
           <span class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">git push origin main</span></span>
           <span class="term-line"><span class="term-out">Отправляем на сервер...</span></span>
           <span class="term-line"><span class="term-ok">✓ готово за 2.3с</span></span>
           <span class="term-line">&nbsp;</span>
           <span class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">docker compose up -d</span></span>
           <span class="term-line"><span class="term-out">Поднимаем контейнеры...</span></span>
-          <span class="term-line"><span class="term-ok">✓ api      запущен</span></span>
+          <span class="term-line"><span class="term-ok">✓ api    запущен</span></span>
           <span class="term-line"><span class="term-ok">✓ postgres запущен</span></span>
           <span class="term-line"><span class="term-ok">✓ nginx    запущен</span></span>
           <span class="term-line">&nbsp;</span>
@@ -826,14 +886,16 @@ footer{
     <div class="stack-wrap">
       <div class="stack-card reveal">
         <div class="stack-head">
-          <div class="stack-name">Бэкенд</div>
-          <div class="stack-count">06 инструментов</div>
+          <div class="stack-name">Бэкенд & Архитектура</div>
+          <div class="stack-count">08 инструментов</div>
         </div>
         <div class="stack-list">
           <span class="pill">ASP.NET Core</span>
           <span class="pill">C#</span>
           <span class="pill">EF Core</span>
-          <span class="pill">MVC / Razor</span>
+          <span class="pill">RabbitMQ</span> <!-- Добавлен брокер -->
+          <span class="pill">Kafka</span>    <!-- Добавлен брокер -->
+          <span class="pill">КриптоПро .NET</span>
           <span class="pill">SignalR</span>
           <span class="pill">Minimal API</span>
         </div>
@@ -853,11 +915,10 @@ footer{
       <div class="stack-card reveal">
         <div class="stack-head">
           <div class="stack-name">Базы данных</div>
-          <div class="stack-count">03 инструмента</div>
+          <div class="stack-count">02 инструмента</div>
         </div>
         <div class="stack-list">
           <span class="pill">PostgreSQL</span>
-          <span class="pill">SQL Server</span>
           <span class="pill">Redis</span>
         </div>
       </div>
@@ -903,7 +964,7 @@ footer{
       <div class="contact-card reveal">
         <div class="contact-card-title">Способы связи</div>
         <div class="contact-list">
-          <a href="https://t.me/WYJBro" class="contact-item">
+          <a href="https://t.me/your_telegram" class="contact-item">
             <div class="contact-icon">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 4.5L2.5 12.5l5 1.8 1.8 5L13 16l5 4 3.5-15.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="none"/><path d="M9.3 14.3l8.7-7" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
             </div>
@@ -923,6 +984,17 @@ footer{
             </div>
             <span class="contact-arrow">↗</span>
           </a>
+          <!-- ДОБАВЛЕН ТЕЛЕФОН ЗДЕСЬ -->
+          <a href="tel:+79991234567" class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </div>
+            <div class="contact-info">
+              <span class="contact-type">Телефон</span>
+              <span class="contact-value">+7 (999) 123-45-67</span>
+            </div>
+            <span class="contact-arrow">↗</span>
+          </a>
         </div>
       </div>
     </div>
@@ -936,17 +1008,22 @@ footer{
         <span class="logo-mark">{}</span>
         DevCraft
       </div>
+      <div class="footer-contact">
+        <a href="mailto:hello@yourdomain.ru">hello@yourdomain.ru</a>
+      </div>
       <div>© 2026 — Команда .NET-разработчиков</div>
     </div>
   </div>
 </footer>
 
 <script>
+// Эффект блюра навигации при скролле
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 10);
 });
 
+// Анимация появления блоков
 const reveals = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -957,6 +1034,21 @@ const io = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 reveals.forEach(el => io.observe(el));
+
+// Анимация терминала (строки появляются по очереди)
+const termObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    const lines = document.querySelectorAll('.term-line');
+    lines.forEach((line, index) => {
+      setTimeout(() => {
+        line.classList.add('visible');
+      }, index * 200); // задержка 200мс между строками
+    });
+    termObserver.disconnect();
+  }
+}, { threshold: 0.5 });
+termObserver.observe(document.getElementById('terminal-block'));
+
 </script>
 
 </body>
