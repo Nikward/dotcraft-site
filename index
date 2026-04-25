@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DotCraft — Веб-разработка на ASP.NET Core</title>
+<meta name="description" content="Команда разработчиков ASP.NET Core. CRM-системы, веб-приложения, API под заказ. Полный цикл: от ТЗ до развёртывания на сервере.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf7;
+  --bg-alt:#f3f2ec;
+  --bg-warm:#efece2;
+  --ink:#1a1a1a;
+  --ink-soft:#4a4a4a;
+  --ink-mute:#8a8a82;
+  --line:#e6e4dc;
+  --line-soft:#eeece4;
+  --accent:#2d4a3e;
+  --accent-warm:#c8553d;
+  --accent-warm-soft:#e8b59c;
+  --paper:#ffffff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.mono{font-family:'JetBrains Mono',monospace;font-size:0.74rem;letter-spacing:0.05em;text-transform:uppercase}
+.container{max-width:1280px;margin:0 auto;padding:0 28px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 28px;background:rgba(250,250,247,0.92);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
+nav.scrolled{border-bottom-color:var(--line)}
+.nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:500;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px}
+.logo-dot{width:9px;height:9px;background:var(--accent-warm);border-radius:50%;display:inline-block}
+.nav-links{display:flex;gap:30px;list-style:none}
+.nav-links a{color:var(--ink-soft);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{padding:9px 20px;background:var(--ink);color:var(--bg);text-decoration:none;border-radius:100px;font-size:.85rem;font-weight:600;transition:transform .2s}
+.nav-cta:hover{transform:translateY(-2px)}
+
+/* HERO */
+.hero{padding:90px 0 0;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:60px;align-items:center;padding:50px 0 60px}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;margin-bottom:24px;color:var(--ink-mute)}
+.hero-eyebrow::before{content:"";width:28px;height:1px;background:var(--ink-mute)}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(2.4rem,5vw,4.4rem);line-height:1.02;font-weight:400;letter-spacing:-0.035em;margin-bottom:24px}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--accent)}
+.hero h1 .underline{position:relative;white-space:nowrap}
+.hero h1 .underline::after{content:"";position:absolute;left:0;right:0;bottom:0.08em;height:0.12em;background:var(--accent-warm);opacity:0.35;z-index:-1}
+.hero-lede{font-size:1.05rem;color:var(--ink-soft);max-width:540px;margin-bottom:28px;line-height:1.55}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:36px}
+.btn-primary{padding:14px 28px;background:var(--ink);color:var(--bg);text-decoration:none;border-radius:100px;font-weight:600;font-size:.9rem;display:inline-flex;align-items:center;gap:10px;transition:transform .2s,background .2s}
+.btn-primary:hover{transform:translateY(-2px);background:var(--accent)}
+.btn-arrow{transition:transform .2s}
+.btn-primary:hover .btn-arrow{transform:translate(3px,-3px)}
+.btn-secondary{padding:14px 24px;color:var(--ink);text-decoration:none;font-weight:500;font-size:.9rem;border-bottom:1px solid var(--ink);transition:opacity .2s}
+.btn-secondary:hover{opacity:0.6}
+.hero-trust{display:flex;gap:24px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--line)}
+.hero-trust-item{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--ink-soft)}
+.hero-trust-item svg{width:18px;height:18px;color:var(--accent);flex-shrink:0}
+
+.hero-visual{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:22px;position:relative;box-shadow:0 1px 0 rgba(0,0,0,0.02),0 8px 24px -12px rgba(0,0,0,0.08)}
+.hv-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--line-soft);margin-bottom:14px}
+.hv-dots{display:flex;gap:5px}
+.hv-dots span{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.hv-dots span:nth-child(1){background:#e8a89a}
+.hv-dots span:nth-child(2){background:#e8d3a8}
+.hv-dots span:nth-child(3){background:#a8c8b5}
+.hv-tab{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink-mute)}
+.hv-line{display:flex;align-items:center;gap:10px;padding:6px 10px;font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--ink-soft);border-radius:4px;margin-bottom:2px}
+.hv-line:nth-child(odd){background:var(--bg-alt)}
+.hv-line .num{color:var(--ink-mute);width:18px;text-align:right}
+.hv-line .kw{color:#7a3b96}
+.hv-line .fn{color:var(--accent)}
+.hv-line .str{color:var(--accent-warm)}
+.hv-badge{position:absolute;bottom:-14px;right:22px;background:var(--ink);color:var(--bg);padding:7px 16px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:0.08em;display:flex;align-items:center;gap:8px}
+.hv-badge::before{content:"";width:6px;height:6px;background:#7adb9b;border-radius:50%;box-shadow:0 0 0 3px rgba(122,219,155,0.25);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(122,219,155,0.25)}50%{box-shadow:0 0 0 5px rgba(122,219,155,0.1)}}
+
+/* STATS */
+.stats-bar{background:var(--ink);color:var(--bg);padding:30px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.stat{padding:0 28px;border-left:1px solid rgba(250,250,247,0.12)}
+.stat:first-child{border-left:none;padding-left:0}
+.stat-num{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:400;letter-spacing:-0.03em;line-height:1;margin-bottom:6px}
+.stat-num em{font-style:italic;color:var(--accent-warm-soft);font-weight:300}
+.stat-label{font-size:.82rem;color:rgba(250,250,247,0.6);line-height:1.4}
+
+/* TICKER */
+.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:11px 0;overflow:hidden;background:var(--bg)}
+.ticker-track{display:flex;gap:48px;white-space:nowrap;animation:ticker 40s linear infinite;font-family:'JetBrains Mono',monospace;font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute)}
+.ticker-track span{display:inline-flex;align-items:center;gap:10px}
+.ticker-track span::before{content:"◆";color:var(--accent-warm);font-size:.55rem}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{padding:68px 0;position:relative}
+.section-header{margin-bottom:40px;max-width:760px}
+.section-header.center{margin-left:auto;margin-right:auto;text-align:center}
+.section-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.section-header.center .section-eyebrow{justify-content:center}
+.section-eyebrow::before{content:"";width:24px;height:1px;background:var(--accent-warm)}
+.section-header.center .section-eyebrow::after{content:"";width:24px;height:1px;background:var(--accent-warm)}
+.section-title{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3.4vw,2.7rem);line-height:1.05;font-weight:400;letter-spacing:-0.03em;margin-bottom:14px}
+.section-title em{font-style:italic;color:var(--accent);font-weight:300}
+.section-lede{font-size:.98rem;color:var(--ink-soft);max-width:600px;line-height:1.6}
+.section-header.center .section-lede{margin:0 auto}
+
+/* PROBLEMS */
+.problems{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.problems-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.problem{background:var(--bg);padding:24px 22px;display:flex;flex-direction:column;gap:8px;transition:background .3s}
+.problem:hover{background:var(--paper)}
+.problem-q{font-family:'Fraunces',serif;font-size:1rem;font-style:italic;color:var(--accent-warm);font-weight:400;line-height:1.3}
+.problem-a{font-size:.92rem;color:var(--ink);font-weight:500;line-height:1.4}
+.problem-a strong{color:var(--accent)}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.service-card{background:var(--bg);padding:26px 22px;transition:background .3s;cursor:default;position:relative;display:flex;flex-direction:column}
+.service-card:hover{background:var(--paper)}
+.service-icon{width:34px;height:34px;margin-bottom:16px;color:var(--accent)}
+.service-icon svg{width:100%;height:100%}
+.service-title{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:500;letter-spacing:-0.02em;margin-bottom:8px;line-height:1.2}
+.service-desc{color:var(--ink-soft);font-size:.88rem;line-height:1.55;flex:1}
+.service-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px}
+.service-tag{font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:3px 9px;background:var(--bg-alt);border-radius:100px;color:var(--ink-soft);letter-spacing:0.05em}
+.service-price{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);display:flex;align-items:baseline;justify-content:space-between;font-size:.8rem;color:var(--ink-mute)}
+.service-price strong{font-family:'Fraunces',serif;font-size:1rem;font-weight:500;color:var(--ink);font-style:italic}
+
+/* PROCESS */
+.process-list{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.process-step{background:var(--bg);padding:24px 22px;display:flex;flex-direction:column;gap:8px;position:relative;transition:background .3s}
+.process-step:hover{background:var(--paper)}
+.process-num{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:300;font-style:italic;color:var(--accent-warm);letter-spacing:-0.02em;line-height:1;margin-bottom:2px}
+.process-title{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:500;letter-spacing:-0.02em;line-height:1.2}
+.process-desc{color:var(--ink-soft);font-size:.86rem;line-height:1.55}
+.process-meta{margin-top:auto;padding-top:10px;display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ink-mute);letter-spacing:0.05em}
+.process-meta::before{content:"";width:14px;height:1px;background:var(--ink-mute)}
+
+/* ADVANTAGES */
+.advantages{background:var(--bg-alt)}
+.adv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.adv-item{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:22px;position:relative;transition:transform .3s,border-color .3s}
+.adv-item:hover{transform:translateY(-2px);border-color:var(--accent)}
+.adv-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent-warm);margin-bottom:12px;letter-spacing:0.1em}
+.adv-title{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:500;letter-spacing:-0.02em;margin-bottom:8px;line-height:1.2}
+.adv-desc{color:var(--ink-soft);font-size:.88rem;line-height:1.55}
+
+/* STACK */
+.stack-section{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stack-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:50px;align-items:start}
+.stack-cats{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.stack-cat{padding:16px;background:var(--bg);border:1px solid var(--line);border-radius:6px}
+.stack-cat-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:10px;padding-bottom:8px;border-bottom:1px dashed var(--line);display:flex;align-items:center;gap:8px}
+.stack-cat-label::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent-warm)}
+.stack-items{display:flex;flex-wrap:wrap;gap:5px}
+.stack-pill{padding:5px 11px;background:var(--bg-alt);border:1px solid transparent;border-radius:100px;font-size:.78rem;font-weight:500;color:var(--ink);transition:all .2s;cursor:default}
+.stack-pill:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.price-card{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:26px 22px;position:relative;display:flex;flex-direction:column}
+.price-card.featured{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.price-card.featured .price-name,.price-card.featured .price-amount{color:var(--bg)}
+.price-card.featured .price-desc,.price-card.featured .price-feat{color:rgba(250,250,247,0.7)}
+.price-card.featured .price-feat svg{color:var(--accent-warm-soft)}
+.price-badge{position:absolute;top:-10px;left:22px;background:var(--accent-warm);color:var(--bg);padding:4px 12px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:0.1em}
+.price-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:12px}
+.price-amount{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:500;letter-spacing:-0.02em;margin-bottom:6px;line-height:1}
+.price-amount em{font-style:italic;font-weight:300;font-size:1rem;color:var(--ink-mute)}
+.price-card.featured .price-amount em{color:rgba(250,250,247,0.5)}
+.price-desc{font-size:.86rem;color:var(--ink-soft);margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--line);line-height:1.45}
+.price-card.featured .price-desc{border-color:rgba(250,250,247,0.15)}
+.price-feats{display:flex;flex-direction:column;gap:7px;flex:1;margin-bottom:18px}
+.price-feat{display:flex;align-items:flex-start;gap:8px;font-size:.86rem;color:var(--ink-soft);line-height:1.45}
+.price-feat svg{width:14px;height:14px;color:var(--accent);flex-shrink:0;margin-top:3px}
+.price-cta{padding:10px 20px;text-align:center;text-decoration:none;border-radius:100px;font-weight:600;font-size:.84rem;border:1px solid var(--ink);color:var(--ink);transition:all .2s}
+.price-cta:hover{background:var(--ink);color:var(--bg)}
+.price-card.featured .price-cta{background:var(--bg);color:var(--ink);border-color:var(--bg)}
+.price-card.featured .price-cta:hover{background:var(--accent-warm);color:var(--bg);border-color:var(--accent-warm)}
+
+/* FAQ */
+.faq{background:var(--bg-alt)}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.faq-item{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:18px 20px;cursor:pointer;transition:border-color .2s}
+.faq-item:hover{border-color:var(--accent)}
+.faq-q{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;font-family:'Fraunces',serif;font-size:1.02rem;font-weight:500;letter-spacing:-0.01em;line-height:1.3}
+.faq-toggle{width:20px;height:20px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem;color:var(--ink-mute);transition:transform .3s,background .2s,color .2s}
+.faq-item.open .faq-toggle{transform:rotate(45deg);background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:.88rem;color:var(--ink-soft);line-height:1.6}
+.faq-item.open .faq-a{max-height:240px;padding-top:10px}
+
+/* CTA */
+.cta-section{background:var(--ink);color:var(--bg);padding:68px 0;position:relative;overflow:hidden}
+.cta-section::before{content:"";position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(200,85,61,0.18) 0%,transparent 70%);pointer-events:none}
+.cta-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.2fr 1fr;gap:50px;align-items:center}
+.cta-title{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3.4vw,2.7rem);line-height:1.05;font-weight:400;letter-spacing:-0.03em;margin-bottom:16px}
+.cta-title em{font-style:italic;color:var(--accent-warm-soft);font-weight:300}
+.cta-lede{font-size:.98rem;color:rgba(250,250,247,0.7);margin-bottom:22px;line-height:1.6}
+.cta-trust{display:flex;flex-direction:column;gap:9px;font-size:.86rem;color:rgba(250,250,247,0.7)}
+.cta-trust-item{display:flex;align-items:center;gap:10px}
+.cta-trust-item svg{width:16px;height:16px;color:var(--accent-warm-soft);flex-shrink:0}
+.cta-contacts{display:flex;flex-direction:column;gap:0}
+.cta-contact{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-top:1px solid rgba(250,250,247,0.15);text-decoration:none;color:var(--bg);transition:padding-left .3s}
+.cta-contact:last-child{border-bottom:1px solid rgba(250,250,247,0.15)}
+.cta-contact:hover{padding-left:10px}
+.cta-contact-label{display:flex;align-items:center;gap:14px}
+.cta-contact-type{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(250,250,247,0.5);width:80px}
+.cta-contact-value{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:400;letter-spacing:-0.01em}
+.cta-arrow{font-size:1.15rem;transition:transform .3s,color .3s;color:rgba(250,250,247,0.5)}
+.cta-contact:hover .cta-arrow{transform:translate(4px,-4px);color:var(--accent-warm-soft)}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(250,250,247,0.5);padding:30px 0;font-size:.8rem;border-top:1px solid rgba(250,250,247,0.1)}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+.footer-logo{font-family:'Fraunces',serif;font-size:1rem;color:var(--bg);font-weight:500}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+@media(max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:24px 0}
+  .stat{padding:0 16px}
+  .stat:nth-child(odd){border-left:none;padding-left:0}
+  .problems-grid,.services-grid,.process-list{grid-template-columns:repeat(2,1fr)}
+  .adv-grid{grid-template-columns:repeat(2,1fr)}
+  .stack-wrap{grid-template-columns:1fr;gap:32px}
+  .pricing-grid{grid-template-columns:1fr}
+  .faq-grid{grid-template-columns:1fr}
+  .cta-inner{grid-template-columns:1fr;gap:32px}
+}
+@media(max-width:680px){
+  .container{padding:0 20px}
+  nav{padding:12px 20px}
+  .nav-links{display:none}
+  .hero{padding:80px 0 0}
+  section{padding:52px 0}
+  .section-header{margin-bottom:28px}
+  .problems-grid,.services-grid,.process-list,.adv-grid,.stack-cats{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr;gap:18px}
+  .stat{border-left:none!important;padding-left:0!important}
+  .cta-section{padding:52px 0}
+  .cta-contact-type{width:auto}
+  .cta-contact-label{flex-direction:column;align-items:flex-start;gap:4px}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="logo"><span class="logo-dot"></span>DotCraft</div>
+    <ul class="nav-links">
+      <li><a href="#services">Услуги</a></li>
+      <li><a href="#process">Процесс</a></li>
+      <li><a href="#stack">Стек</a></li>
+      <li><a href="#pricing">Цены</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Обсудить проект</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow mono">Команда .NET-разработчиков · Подработка</div>
+        <h1>Веб-приложения, <br>что <em>работают</em> и <span class="underline">приносят</span> прибыль.</h1>
+        <p class="hero-lede">Разрабатываем CRM-системы, корпоративные веб-приложения и API на ASP.NET Core. Полный цикл: от написания ТЗ и проектирования архитектуры до развёртывания на вашем сервере и настройки CI/CD.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-primary">Обсудить задачу <span class="btn-arrow">↗</span></a>
+          <a href="#services" class="btn-secondary">Что мы делаем</a>
+        </div>
+        <div class="hero-trust">
+          <div class="hero-trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Бесплатная консультация
+          </div>
+          <div class="hero-trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Договор + закрывающие документы
+          </div>
+          <div class="hero-trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Поэтапная оплата
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hv-header">
+          <div class="hv-dots"><span></span><span></span><span></span></div>
+          <div class="hv-tab">CrmService.cs</div>
+        </div>
+        <div class="hv-line"><span class="num">12</span><span><span class="kw">public class</span> <span class="fn">CrmService</span></span></div>
+        <div class="hv-line"><span class="num">13</span><span>{</span></div>
+        <div class="hv-line"><span class="num">14</span><span>&nbsp;&nbsp;<span class="kw">public async</span> Task&lt;<span class="fn">Result</span>&gt;</span></div>
+        <div class="hv-line"><span class="num">15</span><span>&nbsp;&nbsp;<span class="fn">CreateDealAsync</span>(DealDto dto)</span></div>
+        <div class="hv-line"><span class="num">16</span><span>&nbsp;&nbsp;{</span></div>
+        <div class="hv-line"><span class="num">17</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">var</span> deal = _mapper.<span class="fn">Map</span>(dto);</span></div>
+        <div class="hv-line"><span class="num">18</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">await</span> _db.<span class="fn">SaveAsync</span>(deal);</span></div>
+        <div class="hv-line"><span class="num">19</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> Result.<span class="fn">Ok</span>(<span class="str">"created"</span>);</span></div>
+        <div class="hv-line"><span class="num">20</span><span>&nbsp;&nbsp;}</span></div>
+        <div class="hv-line"><span class="num">21</span><span>}</span></div>
+        <div class="hv-badge">Online · Принимаем заявки</div>
+      </div>
+    </div>
+  </div>
+  <div class="ticker">
+    <div class="ticker-track">
+      <span>ASP.NET Core</span><span>CRM-системы</span><span>REST API</span><span>PostgreSQL</span><span>CI/CD</span><span>Angular</span><span>Razor Pages</span><span>EF Core</span><span>Docker</span><span>Техническое задание</span><span>Микросервисы</span><span>SignalR</span>
+      <span>ASP.NET Core</span><span>CRM-системы</span><span>REST API</span><span>PostgreSQL</span><span>CI/CD</span><span>Angular</span><span>Razor Pages</span><span>EF Core</span><span>Docker</span><span>Техническое задание</span><span>Микросервисы</span><span>SignalR</span>
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-num">5+ <em>лет</em></div>
+        <div class="stat-label">опыта в коммерческой разработке</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><em>~</em>24<em> ч</em></div>
+        <div class="stat-label">средний срок ответа на заявку</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100<em>%</em></div>
+        <div class="stat-label">проектов сдаём в оговорённый срок</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2 <em>—</em> 3</div>
+        <div class="stat-label">разработчика, без посредников</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="problems">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Узнаёте ситуацию?</div>
+      <h2 class="section-title">Часто к нам приходят <em>с такими задачами</em></h2>
+      <p class="section-lede">Если ваш случай похож на один из этих — скорее всего, мы поможем. Если не похож — напишите всё равно, обсудим.</p>
+    </div>
+    <div class="problems-grid">
+      <div class="problem reveal">
+        <div class="problem-q">«У нас всё в Excel, менеджеры теряют клиентов и сделки…»</div>
+        <div class="problem-a">→ Сделаем <strong>CRM под ваш процесс</strong>, а не общую коробку</div>
+      </div>
+      <div class="problem reveal">
+        <div class="problem-q">«Купили готовое решение — половина не работает, половина не нужна…»</div>
+        <div class="problem-a">→ Спроектируем систему <strong>под ваши реальные задачи</strong></div>
+      </div>
+      <div class="problem reveal">
+        <div class="problem-q">«Нужен личный кабинет для клиентов, не знаем с чего начать…»</div>
+        <div class="problem-a">→ Поможем <strong>с ТЗ и архитектурой</strong>, потом разработаем</div>
+      </div>
+      <div class="problem reveal">
+        <div class="problem-q">«Подрядчик пропал, проект на полпути, доступов нет…»</div>
+        <div class="problem-a">→ <strong>Разберёмся в чужом коде</strong> и доведём до запуска</div>
+      </div>
+      <div class="problem reveal">
+        <div class="problem-q">«Мобильному приложению нужен backend и API…»</div>
+        <div class="problem-a">→ Напишем <strong>надёжный REST API</strong> с документацией</div>
+      </div>
+      <div class="problem reveal">
+        <div class="problem-q">«Сайт работает, но падает раз в неделю — никто не понимает почему…»</div>
+        <div class="problem-a">→ Проведём <strong>аудит и стабилизируем</strong> работу</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Услуги</div>
+      <h2 class="section-title">Что мы <em>делаем</em></h2>
+      <p class="section-lede">Шесть направлений со стабильным коммерческим опытом, а не «попробуем разобраться».</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="10" width="36" height="28" rx="2"/><path d="M6 18h36M14 26h8M14 30h14M14 34h6"/><circle cx="34" cy="28" r="4"/></svg></div>
+        <h3 class="service-title">CRM-системы</h3>
+        <p class="service-desc">Учёт клиентов, сделок, задач. Интеграции с почтой, телефонией и мессенджерами. Кастомные отчёты под процессы вашей компании.</p>
+        <div class="service-tags"><span class="service-tag">Воронки</span><span class="service-tag">Интеграции</span><span class="service-tag">Роли</span></div>
+        <div class="service-price">от <strong>120 000 ₽</strong></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="8" width="36" height="32" rx="2"/><path d="M6 16h36"/><circle cx="11" cy="12" r="1" fill="currentColor"/><circle cx="15" cy="12" r="1" fill="currentColor"/><path d="M14 24l-4 4 4 4M34 24l4 4-4 4M28 22l-8 12"/></svg></div>
+        <h3 class="service-title">Веб-приложения под заказ</h3>
+        <p class="service-desc">Внутренние порталы, личные кабинеты, документооборот, b2b-маркетплейсы. Под ваш бизнес-процесс, а не наоборот.</p>
+        <div class="service-tags"><span class="service-tag">SPA</span><span class="service-tag">Кабинеты</span><span class="service-tag">Дашборды</span></div>
+        <div class="service-price">от <strong>80 000 ₽</strong></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 14l-8 10 8 10M32 14l8 10-8 10M28 10l-8 28"/></svg></div>
+        <h3 class="service-title">REST API и backend</h3>
+        <p class="service-desc">API для мобильных приложений, интеграций или фронтенда. OpenAPI-документация, JWT-авторизация, версионирование.</p>
+        <div class="service-tags"><span class="service-tag">REST</span><span class="service-tag">OpenAPI</span><span class="service-tag">JWT</span></div>
+        <div class="service-price">от <strong>50 000 ₽</strong></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M24 6l-14 8v12c0 9 6 14 14 16 8-2 14-7 14-16V14L24 6z"/><path d="M19 24l4 4 8-8"/></svg></div>
+        <h3 class="service-title">DevOps и развёртывание</h3>
+        <p class="service-desc">Поднимаем проект на вашем сервере. Настраиваем CI/CD, контейнеры через Docker, мониторинг и автобэкапы.</p>
+        <div class="service-tags"><span class="service-tag">Docker</span><span class="service-tag">CI/CD</span><span class="service-tag">Linux</span></div>
+        <div class="service-price">от <strong>30 000 ₽</strong></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 6h16l8 8v28H14V6z"/><path d="M30 6v8h8M20 22h14M20 28h14M20 34h8"/></svg></div>
+        <h3 class="service-title">ТЗ и аналитика</h3>
+        <p class="service-desc">Превращаем идею в чёткий документ: требования, схемы данных, пользовательские сценарии. Можно работать с любым подрядчиком.</p>
+        <div class="service-tags"><span class="service-tag">User stories</span><span class="service-tag">Архитектура</span><span class="service-tag">Оценка</span></div>
+        <div class="service-price">от <strong>25 000 ₽</strong></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="24" cy="24" r="18"/><path d="M24 14v10l7 4M14 24h-2M24 36v2M34 24h2"/></svg></div>
+        <h3 class="service-title">Доработки и поддержка</h3>
+        <p class="service-desc">Подхватываем существующие проекты на ASP.NET Core. Разбираемся в чужом коде, фиксим баги, добавляем функционал.</p>
+        <div class="service-tags"><span class="service-tag">Аудит</span><span class="service-tag">Рефакторинг</span><span class="service-tag">Hotfix</span></div>
+        <div class="service-price">от <strong>2 500 ₽/час</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="advantages">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Почему мы</div>
+      <h2 class="section-title">Маленькая команда — <em>большая</em> ответственность</h2>
+      <p class="section-lede">Шесть причин, по которым с нами проще, чем с агентством на 50 человек или с фрилансером-одиночкой.</p>
+    </div>
+    <div class="adv-grid">
+      <div class="adv-item reveal">
+        <div class="adv-num mono">— 01 —</div>
+        <h3 class="adv-title">Работаем с задачей, а не с тикетами</h3>
+        <p class="adv-desc">Каждый — взрослый специалист с опытом продуктовой работы. Понимаем, как код влияет на бизнес.</p>
+      </div>
+      <div class="adv-item reveal">
+        <div class="adv-num mono">— 02 —</div>
+        <h3 class="adv-title">Полный цикл под одной крышей</h3>
+        <p class="adv-desc">От ТЗ и архитектуры до развёртывания и CI/CD. Не нужно искать отдельных подрядчиков на DevOps.</p>
+      </div>
+      <div class="adv-item reveal">
+        <div class="adv-num mono">— 03 —</div>
+        <h3 class="adv-title">Фиксированные цены, поэтапная оплата</h3>
+        <p class="adv-desc">Стоимость определяем до начала. Платите за принятые этапы, а не за «человеко-часы из воздуха».</p>
+      </div>
+      <div class="adv-item reveal">
+        <div class="adv-num mono">— 04 —</div>
+        <h3 class="adv-title">Без зоопарка технологий</h3>
+        <p class="adv-desc">Не учим новые фреймворки на ваших проектах. Только то, в чём действительно сильны — .NET, PostgreSQL, Angular.</p>
+      </div>
+      <div class="adv-item reveal">
+        <div class="adv-num mono">— 05 —</div>
+        <h3 class="adv-title">Код, который можно передать</h3>
+        <p class="adv-desc">Пишем чисто, документируем по делу. Если завтра решите вести проект внутри — никто не схватится за голову.</p>
+      </div>
+      <div class="adv-item reveal">
+        <div class="adv-num mono">— 06 —</div>
+        <h3 class="adv-title">Связь в течение дня</h3>
+        <p class="adv-desc">Не пропадаем на неделю. Telegram в течение рабочего дня, по серьёзным вопросам — созвон.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Как мы работаем</div>
+      <h2 class="section-title">От обсуждения <em>до запуска</em> — без сюрпризов</h2>
+      <p class="section-lede">Шесть этапов с понятными результатами. Вы всегда знаете, что происходит сейчас и что будет дальше.</p>
+    </div>
+    <div class="process-list">
+      <div class="process-step reveal">
+        <div class="process-num">01</div>
+        <div class="process-title">Знакомство</div>
+        <div class="process-desc">Созваниваемся, обсуждаем задачу. Уточняем цели и ограничения. Получаете честную оценку: подходим ли друг другу.</div>
+        <div class="process-meta">30–60 минут · бесплатно</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-num">02</div>
+        <div class="process-title">Техническое задание</div>
+        <div class="process-desc">Структурируем требования, прорисовываем архитектуру, фиксируем стек. ТЗ — точка опоры на весь проект.</div>
+        <div class="process-meta">3–7 дней</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-num">03</div>
+        <div class="process-title">Оценка и договор</div>
+        <div class="process-desc">Разбиваем работу на этапы. По каждому — срок и стоимость. Согласуем договор. Платежи привязаны к этапам.</div>
+        <div class="process-meta">1–3 дня</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-num">04</div>
+        <div class="process-title">Разработка с демо</div>
+        <div class="process-desc">Работаем итерациями. Раз в 1–2 недели показываем результат. Корректируете направление по ходу.</div>
+        <div class="process-meta">от 2 недель</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-num">05</div>
+        <div class="process-title">Развёртывание</div>
+        <div class="process-desc">Поднимаем проект на вашем сервере. CI/CD, мониторинг, бэкапы. Передаём документацию и доступы.</div>
+        <div class="process-meta">2–5 дней</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-num">06</div>
+        <div class="process-title">Поддержка</div>
+        <div class="process-desc">Гарантия на весь объём работ. Если хотите — сопровождаем дальше: обновления, доработки, реакция на инциденты.</div>
+        <div class="process-meta">по договорённости</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack" class="stack-section">
+  <div class="container">
+    <div class="stack-wrap">
+      <div class="reveal">
+        <div class="section-eyebrow">Стек технологий</div>
+        <h2 class="section-title">Инструменты, в которых мы <em>сильны</em></h2>
+        <p class="section-lede">Не хватаемся за модные фреймворки ради галочки. Используем технологии с продуктовым опытом — и за которые готовы отвечать.</p>
+      </div>
+      <div class="stack-cats reveal">
+        <div class="stack-cat">
+          <div class="stack-cat-label">Backend</div>
+          <div class="stack-items">
+            <span class="stack-pill">ASP.NET Core</span>
+            <span class="stack-pill">C#</span>
+            <span class="stack-pill">EF Core</span>
+            <span class="stack-pill">MVC / Razor</span>
+            <span class="stack-pill">SignalR</span>
+            <span class="stack-pill">Minimal API</span>
+          </div>
+        </div>
+        <div class="stack-cat">
+          <div class="stack-cat-label">Frontend</div>
+          <div class="stack-items">
+            <span class="stack-pill">Angular</span>
+            <span class="stack-pill">Razor</span>
+            <span class="stack-pill">TypeScript</span>
+            <span class="stack-pill">HTML / CSS</span>
+          </div>
+        </div>
+        <div class="stack-cat">
+          <div class="stack-cat-label">Базы данных</div>
+          <div class="stack-items">
+            <span class="stack-pill">PostgreSQL</span>
+            <span class="stack-pill">SQL Server</span>
+            <span class="stack-pill">Redis</span>
+          </div>
+        </div>
+        <div class="stack-cat">
+          <div class="stack-cat-label">Инфраструктура</div>
+          <div class="stack-items">
+            <span class="stack-pill">Docker</span>
+            <span class="stack-pill">Linux</span>
+            <span class="stack-pill">GitLab CI</span>
+            <span class="stack-pill">Nginx</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="container">
+    <div class="section-header center reveal">
+      <div class="section-eyebrow">Форматы работы</div>
+      <h2 class="section-title">Три способа <em>с нами работать</em></h2>
+      <p class="section-lede">Цены ориентировочные. Финальная стоимость рассчитывается после изучения задачи.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <div class="price-name">Точечная задача</div>
+        <div class="price-amount">от 25 000 <em>₽</em></div>
+        <div class="price-desc">Небольшая фича, баг или интеграция в существующий проект на ASP.NET Core.</div>
+        <div class="price-feats">
+          <div class="price-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Оценка за 1 день</div>
+          <div class="price-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Срок 3–14 дней</div>
+          <div class="price-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Гарантия 30 дней</div>
+          <div class="price-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Фиксированная цена</div>
+        </div>
+        <a href="#contact" class="price-cta">Обсудить задачу</a>
+      </div>
+      <div class="price-card featured reveal">
+        <div class="price-badge">Чаще всего</div>
+        <div class="price-name">Проект «под ключ»</div>
+        <div class="price-amount">от 120 000 <em>₽</em></div>
+        <div class="price-desc">CRM, личный кабинет или API с нуля до запуска на вашем сервере.</div>
+        <div class="price-feats">
+          <div class="price-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Написание ТЗ включено</div>
+          <div class="price-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Демо раз в 1–2 недели</div>
+          <div class="price-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Поэтапная оплата</div>
+          <div class="price-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Развёртывание + CI/CD</div>
+          <div class="price-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Гарантия 90 дней</div>
+        </div>
+        <a href="#contact" class="price-cta">Получить оценку</a>
+      </div>
+      <div class="price-card reveal">
+        <div class="price-name">Почасовое сопровождение</div>
+        <div class="price-amount">от 2 500 <em>₽/час</em></div>
+        <div class="price-desc">Для существующих проектов: доработки, поддержка, реакция на инциденты.</div>
+        <div class="price-feats">
+          <div class="price-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Минимум 10 часов</div>
+          <div class="price-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Отчёт по каждой задаче</div>
+          <div class="price-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Подключение за 2–3 дня</div>
+          <div class="price-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Без минимального срока</div>
+        </div>
+        <a href="#contact" class="price-cta">Обсудить условия</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Частые вопросы</div>
+      <h2 class="section-title">То, что <em>обычно спрашивают</em></h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item reveal">
+        <div class="faq-q">Работаете официально, по договору?<span class="faq-toggle">+</span></div>
+        <div class="faq-a">Да. Работаем по договору как с физлицами (через самозанятость), так и с юрлицами. Предоставляем закрывающие документы. Условия фиксируем в договоре до старта работ.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">У нас уже есть подрядчик, но хотим заменить.<span class="faq-toggle">+</span></div>
+        <div class="faq-a">Подхватываем существующие проекты. Сначала проводим аудит кода — обычно 1–2 дня. По итогам говорим, реалистично ли продолжать или дешевле переписать с нуля. Без приукрашиваний.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Можно ли получить сметы по этапам, чтобы платить постепенно?<span class="faq-toggle">+</span></div>
+        <div class="faq-a">Это базовый формат работы. Большие проекты разбиваем на 3–6 этапов. По каждому — срок и фиксированная цена. Оплата после сдачи этапа, не авансом.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Сколько в среднем длится разработка CRM?<span class="faq-toggle">+</span></div>
+        <div class="faq-a">Зависит от объёма. Простая CRM с базовой логикой — 1–2 месяца. С интеграциями (телефония, почта, мессенджеры) и нестандартной аналитикой — 2–4 месяца. Точную оценку даём после согласования ТЗ.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Что если в процессе нужно поменять требования?<span class="faq-toggle">+</span></div>
+        <div class="faq-a">Это нормально. Мелкие правки в рамках текущего этапа делаем без доплаты. Существенные изменения — отдельно оцениваем и согласуем. Никаких скрытых счетов.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Кому будет принадлежать код?<span class="faq-toggle">+</span></div>
+        <div class="faq-a">Вам. После оплаты этапа исключительные права передаются заказчику — это закрепляется в договоре. Вы получаете исходный код, документацию и доступы ко всей инфраструктуре.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Делаете ли только фронтенд или только бэкенд?<span class="faq-toggle">+</span></div>
+        <div class="faq-a">Да. Можем сделать только API под существующий фронтенд или только админку на Razor. Angular и Razor — наши; React/Vue делаем, но это не основное направление.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Где будет развёрнут проект?<span class="faq-toggle">+</span></div>
+        <div class="faq-a">Где скажете. Чаще всего — на VPS заказчика (Selectel, Timeweb, Reg.ru) или в облаке (Yandex Cloud, VK Cloud). Помогаем выбрать конфигурацию под нагрузку и бюджет.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contact">
+  <div class="container">
+    <div class="cta-inner">
+      <div>
+        <div class="section-eyebrow" style="color:var(--accent-warm-soft)">Связаться</div>
+        <h2 class="cta-title">Расскажите <em>о задаче</em> — обсудим, как её решить</h2>
+        <p class="cta-lede">Опишите вкратце, что нужно. В течение 24 часов вернёмся с уточняющими вопросами и предварительной оценкой.</p>
+        <div class="cta-trust">
+          <div class="cta-trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Консультация — бесплатно, даже если не подойдём друг другу
+          </div>
+          <div class="cta-trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            NDA при необходимости — подписываем в первый день
+          </div>
+          <div class="cta-trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Не передаём задачи третьим лицам
+          </div>
+        </div>
+      </div>
+      <div class="cta-contacts">
+        <a href="https://t.me/your_telegram" class="cta-contact">
+          <div class="cta-contact-label">
+            <span class="cta-contact-type">Telegram</span>
+            <span class="cta-contact-value">@your_telegram</span>
+          </div>
+          <span class="cta-arrow">↗</span>
+        </a>
+        <a href="mailto:hello@yourdomain.ru" class="cta-contact">
+          <div class="cta-contact-label">
+            <span class="cta-contact-type">Email</span>
+            <span class="cta-contact-value">hello@yourdomain.ru</span>
+          </div>
+          <span class="cta-arrow">↗</span>
+        </a>
+        <a href="https://t.me/your_channel" class="cta-contact">
+          <div class="cta-contact-label">
+            <span class="cta-contact-type">Канал</span>
+            <span class="cta-contact-value">t.me/dotcraft</span>
+          </div>
+          <span class="cta-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">DotCraft</div>
+      <div>© 2026 — Команда .NET-разработчиков</div>
+      <div class="mono">made with care</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+reveals.forEach(el => io.observe(el));
+
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.addEventListener('click', () => {
+    item.classList.toggle('open');
+  });
+});
+</script>
+
+</body>
+</html>
