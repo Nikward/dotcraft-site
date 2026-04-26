@@ -106,7 +106,7 @@ nav.scrolled{border-bottom-color:var(--line)}
   font-size:.78rem;
   font-weight:600;
 }
-.nav-links{display:flex;gap:28px;list-style:none;align-items:center;}
+.nav-links{display:flex;gap:26px;list-style:none;align-items:center;}
 .nav-links a{
   color:var(--ink-soft);
   text-decoration:none;
@@ -217,9 +217,31 @@ nav.scrolled{border-bottom-color:var(--line)}
 .hero-lede{
   font-size:1.08rem;
   color:var(--ink-soft);
-  max-width:520px;
-  margin-bottom:30px;
+  max-width:540px;
+  margin-bottom:24px;
   line-height:1.6;
+}
+.hero-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+  margin-bottom: 36px;
+  max-width: 580px;
+}
+.hero-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+.hero-feature svg {
+  width: 18px;
+  height: 18px;
+  color: var(--mint);
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 .hero-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .btn-primary{
@@ -297,6 +319,7 @@ nav.scrolled{border-bottom-color:var(--line)}
 .str{color:#88d4ff}
 .cm{color:#6e7896;font-style:italic}
 .nm{color:#79c0ff}
+.op{color:#8993a8}
 
 /* === SECTIONS === */
 section{padding:90px 0;position:relative}
@@ -485,6 +508,95 @@ section{padding:90px 0;position:relative}
   51%,100%{opacity:0}
 }
 
+/* === CASES === */
+.cases-wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+.case-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  transition: transform .2s, box-shadow .2s;
+}
+.case-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px -10px rgba(26,35,50,0.08);
+}
+.case-content {
+  padding: 40px;
+}
+.case-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.case-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+.case-desc {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.case-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.case-features li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.case-features li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
+}
+.case-sidebar {
+  background: var(--surface-cool);
+  padding: 40px;
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.case-sidebar-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 20px;
+}
+.case-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.case-stack .pill {
+  background: var(--surface);
+  border-color: #dbe0e8;
+}
+
 /* === STACK === */
 .stack-wrap{
   display:grid;
@@ -543,7 +655,7 @@ section{padding:90px 0;position:relative}
 /* === PRICING === */
 .pricing-wrap {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   align-items: stretch;
 }
@@ -583,7 +695,7 @@ section{padding:90px 0;position:relative}
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--ink-soft);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 .pricing-price {
   font-size: 2rem;
@@ -599,6 +711,27 @@ section{padding:90px 0;position:relative}
   margin-bottom: 24px;
   flex-grow: 1;
 }
+.pricing-list {
+  list-style: none;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pricing-list li {
+  font-size: 0.9rem;
+  color: var(--ink);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.pricing-list li svg {
+  width: 16px; height: 16px;
+  color: var(--green);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
 .pricing-time {
   display: inline-flex;
   align-items: center;
@@ -674,7 +807,6 @@ section{padding:90px 0;position:relative}
   color: var(--ink-soft);
   line-height: 1.6;
 }
-/* Состояние открытого вопроса */
 .faq-item.active {
   border-color: var(--accent);
   box-shadow: 0 4px 16px rgba(79, 124, 255, 0.08);
@@ -799,38 +931,12 @@ section{padding:90px 0;position:relative}
 }
 .contact-item:hover .contact-arrow{transform:translate(3px,-3px);color:var(--accent)}
 
-/* === АНИМАЦИЯ ВНИМАНИЯ ДЛЯ КОНТАКТОВ === */
 @keyframes highlight-contact {
-  0% { 
-    border-color: var(--line); 
-    background: var(--surface);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 24px 50px -16px rgba(26,35,50,0.12); 
-    transform: translateY(0) scale(1); 
-  }
-  20% { 
-    border-color: var(--accent); 
-    background: #f0f4ff;
-    box-shadow: 0 0 0 4px rgba(79, 124, 255, 0.3), 0 24px 50px -16px rgba(79, 124, 255, 0.4); 
-    transform: translateY(-5px) scale(1.02);
-  }
-  50% { 
-    border-color: var(--accent); 
-    background: #f0f4ff;
-    box-shadow: 0 0 0 8px rgba(79, 124, 255, 0.15), 0 24px 50px -16px rgba(79, 124, 255, 0.4); 
-    transform: translateY(-5px) scale(1.02); 
-  }
-  80% { 
-    border-color: var(--accent); 
-    background: #f0f4ff;
-    box-shadow: 0 0 0 4px rgba(79, 124, 255, 0.3), 0 24px 50px -16px rgba(79, 124, 255, 0.4); 
-    transform: translateY(-5px) scale(1.02); 
-  }
-  100% { 
-    border-color: var(--line); 
-    background: var(--surface);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 24px 50px -16px rgba(26,35,50,0.12); 
-    transform: translateY(0) scale(1); 
-  }
+  0% { border-color: var(--line); background: var(--surface); box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 24px 50px -16px rgba(26,35,50,0.12); transform: translateY(0) scale(1); }
+  20% { border-color: var(--accent); background: #f0f4ff; box-shadow: 0 0 0 4px rgba(79, 124, 255, 0.3), 0 24px 50px -16px rgba(79, 124, 255, 0.4); transform: translateY(-5px) scale(1.02); }
+  50% { border-color: var(--accent); background: #f0f4ff; box-shadow: 0 0 0 8px rgba(79, 124, 255, 0.15), 0 24px 50px -16px rgba(79, 124, 255, 0.4); transform: translateY(-5px) scale(1.02); }
+  80% { border-color: var(--accent); background: #f0f4ff; box-shadow: 0 0 0 4px rgba(79, 124, 255, 0.3), 0 24px 50px -16px rgba(79, 124, 255, 0.4); transform: translateY(-5px) scale(1.02); }
+  100% { border-color: var(--line); background: var(--surface); box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 24px 50px -16px rgba(26,35,50,0.12); transform: translateY(0) scale(1); }
 }
 #contact:target .contact-card {
   animation: highlight-contact 2s ease-in-out 0.3s;
@@ -854,14 +960,18 @@ footer{
 .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s}
 .reveal.in{opacity:1;transform:translateY(0)}
 
+@media(max-width:980px){
+  .pricing-wrap{grid-template-columns:1fr; max-width: 500px; margin: 0 auto;}
+}
 @media(max-width:920px){
   .hero{padding:30px 0 60px}
   .hero-grid{grid-template-columns:1fr;gap:40px}
   .services{grid-template-columns:repeat(2,1fr)}
   .process-wrap{grid-template-columns:1fr;gap:40px}
   .terminal{position:static}
+  .case-card{grid-template-columns:1fr;}
+  .case-sidebar{border-left:none; border-top:1px solid var(--line); padding: 30px 40px;}
   .stack-wrap{grid-template-columns:1fr}
-  .pricing-wrap{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr;gap:32px}
   .nav-phone { display: none; }
 }
@@ -869,10 +979,13 @@ footer{
   .container{padding:0 18px}
   nav{padding:12px 18px}
   .nav-links{display:none}
+  .hero-features{grid-template-columns:1fr; gap:10px}
   section,.contact-section{padding:60px 0}
   .services{grid-template-columns:1fr}
   .step{grid-template-columns:1fr;gap:14px}
   .step-num{width:38px;height:38px}
+  .case-content{padding:24px;}
+  .case-sidebar{padding:24px;}
   .section-head{margin-bottom:36px}
   .footer-inner { flex-direction: column; align-items: flex-start; }
 }
@@ -889,6 +1002,7 @@ footer{
     <ul class="nav-links">
       <li><a href="#services">Услуги</a></li>
       <li><a href="#process">Процесс</a></li>
+      <li><a href="#cases">Кейсы</a></li>
       <li><a href="#stack">Технологии</a></li>
       <li><a href="#pricing">Стоимость</a></li>
       <li><a href="#faq">FAQ</a></li>
@@ -909,8 +1023,28 @@ footer{
     <div class="hero-grid">
       <div>
         <div class="hero-tag">Принимаем заказы</div>
-        <h1>Команда разработчиков <span class="accent">ASP.NET Core</span></h1>
-        <p class="hero-lede">Делаем CRM-системы, веб-приложения и API под заказ. Полный цикл — от технического задания до развёртывания на вашем сервере.</p>
+        <h1>Разработка веб-сервисов на <span class="accent">ASP.NET Core</span></h1>
+        <p class="hero-lede">Помогаем бизнесу запускать личные кабинеты, реестры, внутренние порталы, документооборот и интеграции. Полный цикл — от технического задания до релиза. Можно начать с небольшого MVP или аудита, а затем развивать проект по этапам.</p>
+        
+        <div class="hero-features">
+          <div class="hero-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Команда из 3 .NET-разработчиков
+          </div>
+          <div class="hero-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Работаем по договору и этапам
+          </div>
+          <div class="hero-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Развёртываем на вашем сервере
+          </div>
+          <div class="hero-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Есть опыт с ЭЦП, MinIO и брокерами
+          </div>
+        </div>
+
         <div class="hero-actions">
           <a href="#contact" class="btn-primary">Обсудить задачу <span class="btn-arrow">→</span></a>
           <a href="#services" class="btn-secondary">Что мы делаем</a>
@@ -919,20 +1053,24 @@ footer{
       <div class="ide">
         <div class="ide-header">
           <div class="ide-dots"><span></span><span></span><span></span></div>
-          <div class="ide-tab">CrmService.cs</div>
+          <div class="ide-tab">EdocumentService.cs</div>
           <div class="ide-spacer"></div>
         </div>
         <div class="ide-body">
-          <div class="ide-line"><span class="lnum">1</span><span class="code"><span class="kw">public class</span> <span class="fn">CrmService</span></span></div>
+          <div class="ide-line"><span class="lnum">1</span><span class="code"><span class="kw">public class</span> <span class="fn">EdocumentService</span></span></div>
           <div class="ide-line"><span class="lnum">2</span><span class="code">{</span></div>
-          <div class="ide-line"><span class="lnum">3</span><span class="code">&nbsp;&nbsp;<span class="cm">// создание сделки</span></span></div>
+          <div class="ide-line"><span class="lnum">3</span><span class="code">&nbsp;&nbsp;<span class="cm">// проверка ЭЦП при загрузке документа</span></span></div>
           <div class="ide-line"><span class="lnum">4</span><span class="code">&nbsp;&nbsp;<span class="kw">public async</span> <span class="fn">Task</span>&lt;<span class="fn">Result</span>&gt;</span></div>
-          <div class="ide-line"><span class="lnum">5</span><span class="code">&nbsp;&nbsp;<span class="fn">CreateDeal</span>(<span class="fn">DealDto</span> dto)</span></div>
+          <div class="ide-line"><span class="lnum">5</span><span class="code">&nbsp;&nbsp;<span class="fn">UploadWithSignature</span>(<span class="fn">FileDto</span> doc)</span></div>
           <div class="ide-line"><span class="lnum">6</span><span class="code">&nbsp;&nbsp;{</span></div>
-          <div class="ide-line"><span class="lnum">7</span><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">await</span> _db.<span class="fn">SaveAsync</span>(dto);</span></div>
-          <div class="ide-line"><span class="lnum">8</span><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="fn">Result</span>.<span class="fn">Ok</span>(<span class="str">"создано"</span>);</span></div>
-          <div class="ide-line"><span class="lnum">9</span><span class="code">&nbsp;&nbsp;}</span></div>
-          <div class="ide-line"><span class="lnum">10</span><span class="code">}</span></div>
+          <div class="ide-line"><span class="lnum">7</span><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">bool</span> isValid <span class="op">=</span> <span class="kw">await</span> _cryptoPro.<span class="fn">VerifyAsync</span>(doc.Signature);</span></div>
+          <div class="ide-line"><span class="lnum">8</span><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> (<span class="op">!</span>isValid) <span class="kw">return</span> <span class="fn">Result</span>.<span class="fn">Fail</span>(<span class="str">"Неверная ЭЦП"</span>);</span></div>
+          <div class="ide-line"><span class="lnum">9</span><span class="code">&nbsp;</span></div>
+          <div class="ide-line"><span class="lnum">10</span><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">await</span> _minio.<span class="fn">SaveAsync</span>(doc);</span></div>
+          <div class="ide-line"><span class="lnum">11</span><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">await</span> _broker.<span class="fn">PublishAsync</span>(<span class="kw">new</span> <span class="fn">DocEvent</span>(doc.Id));</span></div>
+          <div class="ide-line"><span class="lnum">12</span><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="fn">Result</span>.<span class="fn">Ok</span>();</span></div>
+          <div class="ide-line"><span class="lnum">13</span><span class="code">&nbsp;&nbsp;}</span></div>
+          <div class="ide-line"><span class="lnum">14</span><span class="code">}</span></div>
         </div>
       </div>
     </div>
@@ -1063,6 +1201,43 @@ footer{
   </div>
 </section>
 
+<!-- CASES -->
+<section id="cases">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Опыт в деле</div>
+      <h2 class="section-title">Кейсы и решения</h2>
+      <p class="section-lede">Мы берёмся за сложные инженерные задачи: от высоких нагрузок до жёстких требований безопасности.</p>
+    </div>
+    
+    <div class="cases-wrap">
+      <div class="case-card reveal">
+        <div class="case-content">
+          <span class="case-tag">Сложная архитектура</span>
+          <h3 class="case-title">Автоматизация документооборота для СРО</h3>
+          <p class="case-desc">Разработали крупную распределенную систему для Саморегулируемой организации. В целях безопасности проект был архитектурно разделен на два независимых контура (без прямого API-доступа друг к другу).</p>
+          <ul class="case-features">
+            <li><b>Внешний контур:</b> Реестр организаций и личный кабинет участников. Компании загружают документы, которые автоматически проходят валидацию электронной цифровой подписи (ЭЦП).</li>
+            <li><b>Внутренний контур:</b> Защищенное рабочее место юристов организации для модерации, проверки, принятия или отклонения документов.</li>
+            <li><b>Связь:</b> Сервисы общаются строго через брокер сообщений Artemis, гарантируя отказоустойчивость. Настроена автоматическая email-рассылка доступов.</li>
+          </ul>
+        </div>
+        <div class="case-sidebar">
+          <div class="case-sidebar-title">Стек технологий</div>
+          <div class="case-stack">
+            <span class="pill">ASP.NET Core MVC</span>
+            <span class="pill">PostgreSQL</span>
+            <span class="pill">Apache Artemis</span>
+            <span class="pill">MinIO (S3)</span>
+            <span class="pill">КриптоПро (ЭЦП)</span>
+            <span class="pill">Bootstrap</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- STACK -->
 <section id="stack" class="section-cream">
   <div class="container">
@@ -1081,7 +1256,7 @@ footer{
           <span class="pill">ASP.NET Core</span>
           <span class="pill">C#</span>
           <span class="pill">EF Core</span>
-          <span class="pill">RabbitMQ</span>
+          <span class="pill">RabbitMQ / Artemis</span>
           <span class="pill">Kafka</span>
           <span class="pill">КриптоПро .NET</span>
           <span class="pill">SignalR</span>
@@ -1097,17 +1272,18 @@ footer{
           <span class="pill">Angular</span>
           <span class="pill">TypeScript</span>
           <span class="pill">Razor</span>
-          <span class="pill">HTML / CSS</span>
+          <span class="pill">HTML / CSS / Bootstrap</span>
         </div>
       </div>
       <div class="stack-card reveal">
         <div class="stack-head">
-          <div class="stack-name">Базы данных</div>
-          <div class="stack-count">02 инструмента</div>
+          <div class="stack-name">Базы данных & Хранилища</div>
+          <div class="stack-count">03 инструмента</div>
         </div>
         <div class="stack-list">
           <span class="pill">PostgreSQL</span>
           <span class="pill">Redis</span>
+          <span class="pill">MinIO (S3)</span>
         </div>
       </div>
       <div class="stack-card reveal">
@@ -1131,27 +1307,70 @@ footer{
   <div class="container">
     <div class="section-head reveal">
       <div class="section-eyebrow">Стоимость</div>
-      <h2 class="section-title">Прозрачные цены</h2>
-      <p class="section-lede">Точная смета зависит от задачи, но мы подготовили ориентиры для типовых запросов.</p>
+      <h2 class="section-title">Можно начать с небольшого этапа</h2>
+      <p class="section-lede">Цены ниже — ориентиры. Мы специально оставили низкий порог входа, чтобы клиент мог начать с понятной задачи и не рисковать большим бюджетом сразу.</p>
     </div>
+    
     <div class="pricing-wrap">
+      <!-- Тариф 1: MVP -->
       <div class="pricing-card reveal">
-        <div class="pricing-type">Бэкенд и Интеграции</div>
-        <div class="pricing-price">от 60 000 ₽</div>
-        <div class="pricing-desc">Разработка API, Telegram-ботов, настройка баз данных и связывание вашего сайта с внутренними системами или платежными шлюзами.</div>
-        <div class="pricing-time">Срок: от 1-2 недель</div>
+        <div class="pricing-type">Быстрый старт (MVP)</div>
+        <div class="pricing-price">от 30 000 ₽</div>
+        <div class="pricing-desc">
+          Хороший способ познакомиться в деле. Разработка базового функционала или аудит текущей системы без больших бюджетов.
+        </div>
+        <ul class="pricing-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Аудит существующего кода</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Запуск 1 основного модуля</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Telegram-бот или микро-API</li>
+        </ul>
+        <div class="pricing-time">Срок: 1–2 недели</div>
       </div>
+
+      <!-- Тариф 2: Типовое -->
       <div class="pricing-card popular reveal">
         <div class="pricing-badge">Популярно</div>
-        <div class="pricing-type">Веб-приложения под ключ</div>
+        <div class="pricing-type">Типовое веб-приложение</div>
         <div class="pricing-price">от 150 000 ₽</div>
-        <div class="pricing-desc">Комплексная разработка CRM-системы, личного кабинета или корпоративного портала с вашей бизнес-логикой от нуля до релиза.</div>
-        <div class="pricing-time">Срок: от 3-4 недель</div>
+        <div class="pricing-desc">
+          Разработка веб-приложения под конкретную задачу. Подойдет, если нужно быстро запустить надежный рабочий сервис.
+        </div>
+        <ul class="pricing-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> CRM для небольшой команды</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Личный кабинет клиента</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Базовая логика и роли (без тяжелых интеграций)</li>
+        </ul>
+        <div class="pricing-time">Срок: 3–6 недель</div>
       </div>
+
+      <!-- Тариф 3: Индивидуальная -->
       <div class="pricing-card reveal">
-        <div class="pricing-type">Техническая поддержка</div>
+        <div class="pricing-type">Индивидуальная разработка</div>
+        <div class="pricing-price">от 300 000 ₽</div>
+        <div class="pricing-desc">
+          Сложная система под ваш бизнес с учетом всех внутренних процессов, архитектуры и масштабирования.
+        </div>
+        <ul class="pricing-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Сложная бизнес-логика</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Интеграции с 1С, эквайрингом, сторонними API</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Работа с высокими нагрузками</li>
+        </ul>
+        <div class="pricing-time">Срок: от 2 месяцев</div>
+      </div>
+
+      <!-- Тариф 4: Поддержка -->
+      <div class="pricing-card reveal">
+        <div class="pricing-type">Поддержка проекта</div>
         <div class="pricing-price">от 20 000 ₽ / мес</div>
-        <div class="pricing-desc">Сопровождение готового проекта: мониторинг серверов, оперативное исправление багов и планомерное добавление новых функций.</div>
+        <div class="pricing-desc">
+          Для готовых проектов: исправления, небольшие доработки, мониторинг и консультации.
+        </div>
+        <ul class="pricing-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Исправление ошибок</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Доработки функционала</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Мониторинг работоспособности</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Консультации</li>
+        </ul>
         <div class="pricing-time">Ежемесячная оплата</div>
       </div>
     </div>
@@ -1222,7 +1441,7 @@ footer{
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            Да, мы часто беремся за развитие существующих проектов на ASP.NET. Но сначала мы проводим обязательный аудит текущего кода. Если архитектура позволяет развивать проект — с радостью подхватим. Если код написан так, что любое изменение все ломает, мы честно об этом скажем и предложим варианты решения.
+            Да, мы часто беремся за развитие существующих проектов на ASP.NET. Но сначала мы проводим обязательный аудит текущего кода (в рамках пакета MVP или отдельно). Если архитектура позволяет развивать проект — с радостью подхватим. Если код написан так, что любое изменение все ломает, мы честно об этом скажем.
           </div>
         </div>
       </div>
@@ -1334,23 +1553,19 @@ const termObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 termObserver.observe(document.getElementById('terminal-block'));
 
-// Логика для аккордеона FAQ
 const faqItems = document.querySelectorAll('.faq-item');
 faqItems.forEach(item => {
   const btn = item.querySelector('.faq-question');
   btn.addEventListener('click', () => {
     const isActive = item.classList.contains('active');
     
-    // Закрываем все остальные вопросы (по желанию, можно убрать эту строку, если хотите чтобы несколько могли быть открыты одновременно)
     faqItems.forEach(el => el.classList.remove('active'));
     
-    // Если кликнутый вопрос не был активен — открываем его
     if (!isActive) {
       item.classList.add('active');
     }
   });
 });
-
 </script>
 
 </body>
