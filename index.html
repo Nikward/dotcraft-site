@@ -752,6 +752,40 @@ section{padding:90px 0;position:relative}
   background: var(--mint);
 }
 
+/* NEW: Custom Budget Banner */
+.pricing-custom-budget {
+  background: linear-gradient(135deg, #1e2536 0%, #2a3449 100%);
+  border-radius: 16px;
+  padding: 32px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 32px;
+  box-shadow: 0 15px 35px -10px rgba(26,35,50,0.3);
+}
+.budget-info h3 {
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.budget-info p {
+  color: #a0a8c0;
+  font-size: 0.95rem;
+  max-width: 600px;
+  margin: 0;
+}
+.budget-action .btn-primary {
+  white-space: nowrap;
+  background: var(--mint);
+  box-shadow: 0 4px 15px rgba(93, 184, 150, 0.3);
+}
+.budget-action .btn-primary:hover {
+  background: #4da685;
+  box-shadow: 0 6px 20px rgba(93, 184, 150, 0.4);
+}
+
 /* === FAQ === */
 .faq-wrap {
   max-width: 760px;
@@ -970,6 +1004,7 @@ footer{
   .terminal{position:static}
   .case-card{grid-template-columns:1fr;}
   .case-sidebar{border-left:none; border-top:1px solid var(--line); padding: 30px 40px;}
+  .pricing-custom-budget {flex-direction: column; text-align: center;}
   .stack-wrap{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr;gap:32px}
   .nav-phone { display: none; }
@@ -1376,6 +1411,18 @@ footer{
         <div class="pricing-time">Ежемесячная оплата</div>
       </div>
     </div>
+
+    <!-- NEW: Блок "Система под ваш бюджет" -->
+    <div class="pricing-custom-budget reveal">
+      <div class="budget-info">
+        <h3>Ограничен бюджет на проект?</h3>
+        <p>Расскажите нам о задаче и назовите комфортную сумму. Мы подскажем, что можно реализовать в этих рамках (например, сократить функционал до самого необходимого MVP) без потери качества.</p>
+      </div>
+      <div class="budget-action">
+        <a href="#contact" class="btn-primary">Система под ваш бюджет <span class="btn-arrow">→</span></a>
+      </div>
+    </div>
+
   </div>
 </section>
 
