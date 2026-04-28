@@ -25,13 +25,36 @@
 <!-- /Google Analytics -->
   
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CoreBuild — Веб-разработка на ASP.NET Core</title>
-<meta name="description" content="Команда разработчиков ASP.NET Core. CRM, веб-приложения, API под заказ.">
-<meta property="og:title" content="CoreBuild — Разработка на .NET">
-<meta property="og:description" content="Делаем CRM-системы, веб-приложения и API под заказ. Полный цикл.">
+<title>Разработка на ASP.NET Core под заказ — CoreBuild</title>
+<meta name="description" content="Команда из 3 .NET-разработчиков. Делаем CRM, веб-приложения, REST API и личные кабинеты на ASP.NET Core. Работаем по договору, поэтапная оплата, развёртывание на вашем сервере.">
+<meta property="og:title" content="Разработка на ASP.NET Core под заказ — CoreBuild">
+<meta property="og:description" content="Команда из 3 .NET-разработчиков. CRM, веб-приложения, REST API. Работаем по договору, поэтапная оплата.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
 <meta name="google-site-verification" content="GMF56Ih-RLXFQmfgwx8XH9IwLDCGmqTBd0VViaI9HNw">
 <meta name="yandex-verification" content="c7a27c07c57627dc">
-<meta property="og:type" content="website">
+
+<!-- JSON-LD: Organization -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "CoreBuild",
+  "description": "Команда .NET-разработчиков. Веб-приложения, CRM и REST API на ASP.NET Core.",
+  "email": "hello@corebuild.ru",
+  "telephone": "+7-906-664-25-48",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+7-906-664-25-48",
+    "email": "hello@corebuild.ru",
+    "contactType": "sales",
+    "availableLanguage": ["ru"]
+  },
+  "sameAs": [
+    "https://t.me/WYJBro"
+  ]
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -929,40 +952,114 @@ section{padding:90px 0;position:relative}
   text-transform:uppercase;
 }
 .contact-list{display:flex;flex-direction:column;gap:8px}
+
+/* === Contact item: split into link + copy button === */
 .contact-item{
-  display:flex;align-items:center;gap:14px;
-  padding:14px 16px;
+  display:flex;align-items:center;
+  padding:6px;
   background:var(--bg);
   border-radius:10px;
+  transition:background .15s;
+  gap: 6px;
+}
+.contact-item:hover{background:var(--surface-cool)}
+.contact-link{
+  display:flex;align-items:center;gap:14px;
+  flex: 1;
+  padding: 8px 10px;
   text-decoration:none;
   color:var(--ink);
-  transition:background .15s,transform .15s;
+  border-radius: 8px;
+  transition: transform .15s;
+  min-width: 0;
 }
-.contact-item:hover{background:var(--surface-cool);transform:translateX(3px)}
+.contact-link:hover{transform:translateX(2px)}
 .contact-icon{
   width:38px;height:38px;
   border-radius:10px;
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
 }
-
 .contact-item:nth-child(1) .contact-icon{background:var(--accent-soft);color:var(--accent)}
 .contact-item:nth-child(2) .contact-icon{background:var(--warm-soft);color:var(--warm)}
 .contact-item:nth-child(3) .contact-icon{background:var(--mint-soft);color:var(--mint)}
 .contact-icon svg{width:20px;height:20px}
-.contact-info{flex:1;display:flex;flex-direction:column;gap:2px}
+.contact-info{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
 .contact-type{
   font-size:.74rem;
   color:var(--ink-mute);
   font-weight:500;
 }
-.contact-value{font-size:.95rem;font-weight:500}
+.contact-value{
+  font-size:.95rem;
+  font-weight:500;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
 .contact-arrow{
   font-size:1.1rem;
   color:var(--ink-mute);
   transition:transform .2s,color .2s;
+  flex-shrink: 0;
+  margin-left: 4px;
 }
-.contact-item:hover .contact-arrow{transform:translate(3px,-3px);color:var(--accent)}
+.contact-link:hover .contact-arrow{transform:translate(3px,-3px);color:var(--accent)}
+
+.contact-copy{
+  flex-shrink: 0;
+  width: 38px; height: 38px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-mute);
+  transition: all 0.15s ease;
+  position: relative;
+  font-family: inherit;
+}
+.contact-copy:hover{
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--surface);
+}
+.contact-copy:active{ transform: scale(0.94); }
+.contact-copy svg{ width: 16px; height: 16px; }
+.contact-copy .icon-check{ display: none; color: var(--mint); }
+.contact-copy.copied{
+  border-color: var(--mint);
+  color: var(--mint);
+  background: var(--mint-soft);
+}
+.contact-copy.copied .icon-copy{ display: none; }
+.contact-copy.copied .icon-check{ display: block; }
+
+/* Floating "copied" tooltip */
+.contact-copy::after{
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 4px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s, transform 0.18s;
+  font-family: inherit;
+}
+.contact-copy.copied::after{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
 
 @keyframes highlight-contact {
   0% { border-color: var(--line); background: var(--surface); box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 24px 50px -16px rgba(26,35,50,0.12); transform: translateY(0) scale(1); }
@@ -1524,36 +1621,61 @@ footer{
       <div class="contact-card reveal">
         <div class="contact-card-title">Способы связи</div>
         <div class="contact-list">
-          <a href="https://t.me/WYJBro" class="contact-item">
-            <div class="contact-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 4.5L2.5 12.5l5 1.8 1.8 5L13 16l5 4 3.5-15.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="none"/><path d="M9.3 14.3l8.7-7" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-            </div>
-            <div class="contact-info">
-              <span class="contact-type">Telegram</span>
-              <span class="contact-value">Написать в чат</span>
-            </div>
-            <span class="contact-arrow">↗</span>
-          </a>
-          <a href="mailto:hello@corebuild.ru" class="contact-item">
-            <div class="contact-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg>
-            </div>
-            <div class="contact-info">
-              <span class="contact-type">Email</span>
-              <span class="contact-value">hello@corebuild.ru</span>
-            </div>
-            <span class="contact-arrow">↗</span>
-          </a>
-          <a href="tel:+79066642548" class="contact-item">
-            <div class="contact-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            </div>
-            <div class="contact-info">
-              <span class="contact-type">Телефон</span>
-              <span class="contact-value">+7 (906) 664-25-48</span>
-            </div>
-            <span class="contact-arrow">↗</span>
-          </a>
+
+          <!-- Telegram -->
+          <div class="contact-item">
+            <a href="https://t.me/WYJBro" target="_blank" rel="noopener" class="contact-link">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 4.5L2.5 12.5l5 1.8 1.8 5L13 16l5 4 3.5-15.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="none"/><path d="M9.3 14.3l8.7-7" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+              </div>
+              <div class="contact-info">
+                <span class="contact-type">Telegram</span>
+                <span class="contact-value">@WYJBro</span>
+              </div>
+              <span class="contact-arrow">↗</span>
+            </a>
+            <button type="button" class="contact-copy" data-copy="@WYJBro" data-tooltip="Скопировано" aria-label="Скопировать Telegram">
+              <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+
+          <!-- Email -->
+          <div class="contact-item">
+            <a href="mailto:hello@corebuild.ru" class="contact-link">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg>
+              </div>
+              <div class="contact-info">
+                <span class="contact-type">Email</span>
+                <span class="contact-value">hello@corebuild.ru</span>
+              </div>
+              <span class="contact-arrow">↗</span>
+            </a>
+            <button type="button" class="contact-copy" data-copy="hello@corebuild.ru" data-tooltip="Скопировано" aria-label="Скопировать Email">
+              <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+
+          <!-- Phone -->
+          <div class="contact-item">
+            <a href="tel:+79066642548" class="contact-link">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </div>
+              <div class="contact-info">
+                <span class="contact-type">Телефон</span>
+                <span class="contact-value">+7 (906) 664-25-48</span>
+              </div>
+              <span class="contact-arrow">↗</span>
+            </a>
+            <button type="button" class="contact-copy" data-copy="+79066642548" data-tooltip="Скопировано" aria-label="Скопировать телефон">
+              <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
@@ -1612,6 +1734,60 @@ faqItems.forEach(item => {
     
     if (!isActive) {
       item.classList.add('active');
+    }
+  });
+});
+
+/* === Copy contact to clipboard === */
+function copyToClipboard(text) {
+  // Modern API (HTTPS only)
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(text);
+  }
+  // Fallback for HTTP / older browsers
+  return new Promise((resolve, reject) => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.top = '-9999px';
+    ta.style.left = '-9999px';
+    ta.setAttribute('readonly', '');
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      ok ? resolve() : reject();
+    } catch (err) {
+      document.body.removeChild(ta);
+      reject(err);
+    }
+  });
+}
+
+document.querySelectorAll('.contact-copy').forEach(btn => {
+  btn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const value = btn.getAttribute('data-copy');
+    if (!value) return;
+
+    try {
+      await copyToClipboard(value);
+      btn.classList.add('copied');
+      btn.setAttribute('data-tooltip', 'Скопировано');
+
+      // Send event to analytics
+      if (typeof ym === 'function') ym(108767092, 'reachGoal', 'contact_copy');
+      if (typeof gtag === 'function') gtag('event', 'contact_copy', { value: value });
+
+      setTimeout(() => {
+        btn.classList.remove('copied');
+      }, 1800);
+    } catch (err) {
+      btn.setAttribute('data-tooltip', 'Не удалось скопировать');
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 1800);
     }
   });
 });
